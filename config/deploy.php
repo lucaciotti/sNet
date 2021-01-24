@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'basic',
+    'default' => 'firstdeploy',
 
     /*
     |--------------------------------------------------------------------------
@@ -92,7 +92,7 @@ return [
 
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
-        'repository' => 'https://github.com/lucaciotti/kNet_2.git',
+        'repository' => 'https://github.com/lucaciotti/sNet.git',
         'php_fpm_service' => 'php7.0-fpm',
         'ssh_multiplexing' => false,
         'git_tty' => false,
@@ -110,9 +110,9 @@ return [
     */
 
     'hosts' => [
-        '213.152.198.83' => [
-            'deploy_path' => '/var/www/html/kdev',
-            'user' => 'ced',
+        'gate.eur.aruba.jearuba.cloud:3022 ' => [
+            'deploy_path' => '/var/www/html/dev.lucaciotti.space',
+            'user' => '23028-2666',
             'stage' => 'production',
         ],
     ],
