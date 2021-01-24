@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'firstdeploy',
+    'default' => 'basic',
 
     /*
     |--------------------------------------------------------------------------
@@ -110,8 +110,8 @@ return [
     */
 
     'hosts' => [
-        'gate.eur.aruba.jearuba.cloud:3022 ' => [
-            'deploy_path' => '/var/www/html/dev.lucaciotti.space',
+        'gate.eur.aruba.jearuba.cloud -p 3022 ' => [
+            'deploy_path' => '/var/www/webroot/ROOT/dev.lucaciotti.space',
             'user' => '23028-2666',
             'stage' => 'production',
         ],
