@@ -13,6 +13,7 @@ class Product extends Model
   protected $primaryKey = 'codice';
   public $incrementing = false;
   protected $connection = '';
+  protected $fillable = ['codice', 'descrizion', 'listino1', 'listino6', 'listino7'];
 
   protected $dates = ['u_datacrea'];
   protected $appends = ['master_clas', 'master_grup', 'listino', 'tipo_prod'];

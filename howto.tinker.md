@@ -33,6 +33,7 @@
 
 4. To use faker in Laravels artisan tinker, all you have to enter is:
     $faker = Faker\Factory::create('it_IT');
+    $faker->addProvider(new \Bezhanov\Faker\Provider\Device($faker));
     $faker->name;
     $faker->address;
     $faker->text;
