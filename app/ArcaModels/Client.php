@@ -5,7 +5,7 @@ namespace knet\ArcaModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use RedisUser;
+use knet\Helpers\RedisUser as RedisUser;
 
 use Request;
 // use knet\User;
@@ -17,10 +17,12 @@ class Client extends Model
     protected $primaryKey = 'codice';
     public $incrementing = false;
     protected $connection = '';
-    protected $fillable = ['descrizion', 'supragsoc', 'partiva', 
-                            'codfiscale', 'telefono', 'persdacont', 
-                            'email', 'indirizzo', 'cap', 
-                            'localita', 'prov', 'note'];
+    protected $fillable = [
+      'descrizion', 'supragsoc', 'partiva',
+      'codfiscale', 'telefono', 'persdacont',
+      'email', 'indirizzo', 'cap',
+      'localita', 'prov', 'note'
+    ];
 
     // Scope that garante to find only Client from anagrafe
     protected static function boot()
@@ -33,9 +35,9 @@ class Client extends Model
 
         switch (RedisUser::get('role')) {
           case 'agent':
-            static::addGlobalScope('agent', function(Builder $builder) {
+              static::addGlobalScope('agent', function (Builder $builder) {
                 $builder->where('agente', RedisUser::get('codag'));
-            });
+              });
             break;
           case 'superAgent':
             static::addGlobalScope('superAgent', function(Builder $builder) {
@@ -106,6 +108,11 @@ class Client extends Model
 
     public function scadenza(){
       return $this->hasMany('knet\ArcaModels\ScadCli', 'codcf', 'codice');
+    }
+
+    public function anagNote()
+    {
+      return $this->hasOne('knet\ArcaModels\AnagNote', 'codicecf', 'codice');
     }
 
     //Multator

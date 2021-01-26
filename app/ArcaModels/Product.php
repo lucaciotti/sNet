@@ -4,7 +4,7 @@ namespace knet\ArcaModels;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use RedisUser;
+use knet\Helpers\RedisUser;
 
 class Product extends Model
 {
@@ -62,8 +62,12 @@ class Product extends Model
   }
 
   public function getListinoAttribute(){
-      if(substr($this->attributes['gruppo'],0,1)=='B'){
-        $listino = $this->attributes['listino6'];
+      if(RedisUser::get('ditta_DB')== "kNet_it") {
+        if(substr($this->attributes['gruppo'],0,1)=='B'){
+          $listino = $this->attributes['listino6'];
+        } else {
+          $listino = $this->attributes['listino1'];
+        }
       } else {
         $listino = $this->attributes['listino1'];
       }
@@ -89,6 +93,11 @@ class Product extends Model
 
   public function grpProd(){
     return $this->hasOne('knet\ArcaModels\SubGrpProd', 'codice', 'gruppo');
+  }
+
+  public function descrLang(String $lang)
+  {
+    return $this->hasOne('knet\ArcaModels\ProdLang', 'codicearti', 'codice')->where('codlingua', strtoupper($lang));
   }
 
   //Multator

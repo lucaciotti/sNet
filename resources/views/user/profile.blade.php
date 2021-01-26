@@ -126,6 +126,9 @@
 
                 <dt>% a Carico Agente</dt>
                 <dd>{{ $ritana->perenage }} %</dd>
+
+                <dt>Enasarco XLS</dt>
+                <dd><a type="button" class="btn btn-default btn-xs" target="_blank" href="{{ route('user::enasarcoXLS', [$user->id]) }}">Download</a></dd>
               </dl>
 
               <hr>
@@ -137,12 +140,13 @@
                     <th>Numero</th>
                     <th>Tot. Fattura</th>
                     <th>Imponibile</th>
+                    <th>Progr. Imp.</th>
                     <th>% Ditta</th>
                     <th>Importo Ditta</th>
                     <th>% Agente</th>
                     <th>Importo Agente</th>
                     <th>Progressivo</th>
-                    <th>Residuo</th>
+                    {{-- <th>Residuo</th> --}}
                   </tr>
                 </thead>
                 <tbody>
@@ -162,12 +166,17 @@
                       <td>{{ $mov->ftnumdoc }} </td>
                       <td>{{ currency($mov->totfattura) }}</td>
                       <td>{{ currency($mov->compensi) }}</td>
+                      @if($sum_compensi > $ritana->impmax)
+                        <td class="danger">{{ currency($sum_compensi) }}</td>
+                      @else
+                        <td>{{ currency($sum_compensi) }}</td>
+                      @endif
                       <td>{{ $mov->perendit }}</td>
                       <td>{{ currency($mov->impendit) }}</td>
                       <td>{{ $mov->perenage }}</td>
                       <td>{{ currency($mov->impenage) }}</td>
                       <td>{{ currency($sum_prog) }}</td>
-                      <td>{{ currency($sum_res) }}</td>
+                      {{-- <td>{{ currency($sum_res) }}</td> --}}
                     </tr>
                   @endforeach
                 </tbody>
@@ -177,12 +186,13 @@
                     <td>&nbsp;</td>
                     <td>{{ currency($sum_totfattura) }}</td>
                     <td>{{ currency($sum_compensi) }}</td>
+                    <td>{{ currency($sum_compensi) }}</td>
                     <td>&nbsp;</td>
                     <td>{{ currency($sum_impendit) }}</td>
                     <td>&nbsp;</td>
                     <td>{{ currency($sum_impenage) }}</td>
                     <td>{{ currency($sum_prog) }}</td>
-                    <td>{{ currency($sum_res) }}</td>
+                    {{-- <td>{{ currency($sum_res) }}</td> --}}
                   </tr>
                 </tfoot>
               </table>

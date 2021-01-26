@@ -53,10 +53,15 @@
                     <ul class="treeview-menu">
                         <li class="{{ Ekko::isActiveRoute('listini::idxCli') }}"><a href="{{ route('listini::idxCli') }}">Cliente</a></li>
                         <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::grpCli') }}">Gruppo Clienti</a></li>
-                        <li><hr></li>
+                        <li>&nbsp;</li>
                         @if (!in_array(RedisUser::get('role'), ['agent', 'client']))
-                            <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::cliListScad') }}">Listino in Scadenza</a></li>
+                            <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::cliListScad') }}">Listino Clienti in Scadenza</a></li>
+                            <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::grpListScad') }}">Listino Gruppi in Scadenza</a></li>
                         @endif
+                        <li>&nbsp;</li>
+                        {{-- @if (!in_array(RedisUser::get('role'), ['agent', 'client']))
+                        <li class="{{ Ekko::isActiveRoute('promo::idx') }}"><a href="{{ route('promo::idx') }}">Promo Attive</a></li>
+                        @endif --}}
                     </ul>
                 </li>
                 @endif
@@ -100,6 +105,7 @@
               <li class="treeview {{ Ekko::isActiveRoute('stAbc::*') }}">
                   <a href="{{ route('stAbc::idxAg') }}"><i class='fa fa-sort-alpha-asc'></i> <span>{{ trans('_menu.AbcArt') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                   <ul class="treeview-menu">
+                      <li class="{{ Ekko::isActiveRoute('stAbc::idxArt') }}"><a href="{{ route('stAbc::idxArt') }}">{{ trans('_menu.products') }}</a></li>
                       <li class="{{ Ekko::isActiveRoute('stAbc::idxAg') }}"><a href="{{ route('stAbc::idxAg') }}">{{ trans('_menu.agent') }}</a></li>
                       <li class="{{ Ekko::isActiveRoute('stAbc::idxCli') }}"><a href="{{ route('stAbc::idxCli') }}">{{ trans('_menu.client') }}</a></li>
                       {{-- <li class="{{ Ekko::isActiveRoute('stAbc::idxZone') }}"><a href="{{ route('stAbc::idxZone') }}">{{ trans('_menu.zone') }}</a></li> --}}

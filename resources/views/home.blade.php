@@ -57,6 +57,7 @@
       @if (!in_array(RedisUser::get('role'), ['client']))
       <div class="col-lg-6 col-xs-6">
         <div class="small-box bg-green">
+          <a href="http://kalendar.kronakoblenz.it:8080" target="_blank">
           <div class="inner">
             <h3>&nbsp;</h3>
             <p>Kalendar</p>
@@ -64,7 +65,8 @@
           <div class="icon">
             <i class="fa fa-calendar"></i>
           </div>
-          <a href="http://2.115.99.233:8080" target="_blank" class="small-box-footer">{{ trans('home.moreInfo') }}
+          </a>
+          <a href="http://kalendar.kronakoblenz.it:8080" target="_blank" class="small-box-footer">{{ trans('home.moreInfo') }}
             <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>

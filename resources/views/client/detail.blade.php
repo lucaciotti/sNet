@@ -257,7 +257,7 @@
         </div>
       </div>
       <div class="box-body">
-        <a type="button" class="btn btn-default btn-block" href="{{ route('stFatt::fltCli', $client->codice) }}">{{ trans('client.revenue') }}</a>
+        <a type="button" class="btn btn-default btn-block" target="_blank" href="{{ route('schedaFatArt::PDF', $client->codice) }}">{{ trans('client.revenue') }}</a>
         <a type="button" class="btn btn-default btn-block" href="{{ route('stAbc::idxCli', ['codcli'=>$client->codice]) }}">Abc Articoli</a>
       </div>
     </div>
@@ -300,7 +300,11 @@
         </div>
       </div>
       <div class="box-body">
-        <strong>{!! $client->note !!}</strong>
+        @if ($client->anagNote)
+          <strong>{!! $client->anagNote->note !!}</strong>  
+        @else
+          <strong>{!! $client->note !!}</strong>          
+        @endif
       </div>
     </div>
 

@@ -16,6 +16,7 @@ use knet\ArcaModels\Agent;
 use knet\ArcaModels\SuperAgent;
 use knet\ArcaModels\Nazione;
 use knet\ArcaModels\GrpProd;
+use knet\Helpers\AgentFltUtils;
 
 class StFattController extends Controller
 {
@@ -25,12 +26,13 @@ class StFattController extends Controller
     }
 
     public function idxAg (Request $req, $codAg=null) {
-      $agents = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orderBy('codice')->get();
-      $codAg = ($req->input('codag')) ? $req->input('codag') : $codAg;
-      $agente = (string)(!empty($codAg)) ? $codAg : (!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agents->first()->codice);
-      $descrAg = (!empty($agents->whereStrict('codice', $agente)->first()) ? $agents->whereStrict('codice', $agente)->first()->descrizion : "");
+      $agentList = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orWhere('u_dataini', '>=', Carbon::now())->orderBy('codice')->get();
+      $codAg = ($req->input('codag')) ? $req->input('codag') : ($codAg ? array_wrap($codAg) : $codAg);
+      $fltAgents = (!empty($codAg)) ? $codAg : array_wrap((!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agentList->first()->codice));
+      //$descrAg = (!empty($agents->whereStrict('codice', $agente)->first()) ? $agents->whereStrict('codice', $agente)->first()->descrizion : "");
       $thisYear = (string)(Carbon::now()->year);
-      // dd($agents);
+      $fltAgents = AgentFltUtils::checkSpecialRules($fltAgents);
+      // dd($fltAgents);
 
       // (Legenda PY -> Previous Year ; TY -> This Year)
       $fat_TY = StatFatt::select('agente', 'tipologia',
@@ -49,7 +51,7 @@ class StFattController extends Controller
                                   DB::raw('ROUND(SUM(fattmese),2) as fattmese')
                                 )
                           ->where('codicecf', 'CTOT')
-                          ->where('agente', $agente)->where(DB::raw('LENGTH(agente)'), strlen($agente))
+                          ->whereIn('agente', $fltAgents)
                           ->where('esercizio', $thisYear)
                           ->where('tipologia', 'FATTURATO');
       if($req->input('gruppo')) {
@@ -60,13 +62,13 @@ class StFattController extends Controller
       } else {
         $fat_TY = $fat_TY->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET']);
       }          
-      $fat_TY = $fat_TY->groupBy(['agente', 'tipologia'])
-                          ->with([
-                            'agent' => function($query){
-                              $query->select('codice', 'descrizion');
-                            }
-                            ])
+      $fat_TY = $fat_TY->groupBy(['tipologia'])
                           ->get();
+      // ->with([
+      //   'agent' => function($query){
+      //     $query->select('codice', 'descrizion');
+      //   }
+      //   ])
       // dd($fatTot);
       
       $prevYear = (string)((Carbon::now()->year)-1);
@@ -86,7 +88,7 @@ class StFattController extends Controller
                                   DB::raw('ROUND(SUM(fattmese),2) as fattmese')
                                 )
                           ->where('codicecf', 'CTOT')
-                          ->where('agente', $agente)->where(DB::raw('LENGTH(agente)'), strlen($agente))
+                          ->whereIn('agente', $fltAgents)
                           ->where('esercizio', $prevYear)
                           ->where('tipologia', 'FATTURATO');
       if($req->input('gruppo')) {
@@ -97,12 +99,7 @@ class StFattController extends Controller
       } else {
         $fat_PY = $fat_PY->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET']);
       }          
-      $fat_PY = $fat_PY->groupBy(['agente', 'tipologia'])
-                          ->with([
-                            'agent' => function($query){
-                              $query->select('codice', 'descrizion');
-                            }
-                            ])
+      $fat_PY = $fat_PY->groupBy(['tipologia'])
                           ->get();
 
       $gruppi = GrpProd::where('codice', 'NOT LIKE', '1%')
@@ -120,8 +117,8 @@ class StFattController extends Controller
       $stats = $this->makeFatTgtJson($fat_TY, $fat_PY, $prevMonth);
       // dd($stats);
       return view('stFatt.idxAg', [
-        'agents' => $agents,
-        'agente' => $agente,
+        'agentList' => $agentList,
+        'fltAgents' => $fltAgents,
         'fat_TY' => $fat_TY,
         //'fatDet' => $fatDet,
         'fat_PY' => $fat_PY,
@@ -129,7 +126,7 @@ class StFattController extends Controller
         'prevMonth' => $prevMonth,
         'gruppi' => $gruppi,
         'grpSelected' => $req->input('gruppo'),
-        'descrAg' => $descrAg,
+        'descrAg' => '',
         'thisYear' => $thisYear,
         'prevYear' => $prevYear
       ]);
@@ -227,6 +224,8 @@ class StFattController extends Controller
                               ->withoutGlobalScope('client');
                             }
                             ])
+                          ->withoutGlobalScope('agent')
+                          ->withoutGlobalScope('superAgent')
                           ->get();
       
       $gruppi = GrpProd::where('codice', 'NOT LIKE', '1%')
@@ -359,7 +358,7 @@ class StFattController extends Controller
     }
 
     public function idxZone (Request $req, $codAg=null) {
-      $agents = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orderBy('codice')->get();
+      $agents = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orWhere('u_dataini', '>=', Carbon::now())->orderBy('codice')->get();
       $codAg = ($req->input('codag')) ? $req->input('codag') : $codAg;
       $agente = (string)(!empty($codAg)) ? $codAg : (!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agents->first()->codice);
       $descrAg = (!empty($agents->whereStrict('agente', $agente)->first()->agent) ? $agents->whereStrict('agente', $agente)->first()->agent->descrizion : "");

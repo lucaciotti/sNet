@@ -32,10 +32,10 @@ class ListiniController extends Controller
         // $startOfYear = $date->copy()->startOfYear();
         $endOfYear   = $date->copy()->endOfYear();
 
-        if(RedisUser::get('ditta_DB')=='kNet_es' || (RedisUser::get('ditta_DB')=='kNet_it' && RedisUser::get('codag')=='002'))
-        {
-           $endOfYear = new Carbon('last day of December 2018');
-        }
+        // if(RedisUser::get('ditta_DB')=='kNet_es' || (RedisUser::get('ditta_DB')=='kNet_it' && RedisUser::get('codag')=='002'))
+        // {
+        //    $endOfYear = new Carbon('last day of December 2018');
+        // }
 
         // ->where('datafine', '<=', $endOfYear)
         $customers = Listini::select('codclifor')->where('codclifor', '!=', '')
@@ -67,7 +67,10 @@ class ListiniController extends Controller
                             ->withoutGlobalScope('Listino')
                             ->with('grpProd');
                     },
-                    'wListOk'
+                    'wListOk' => function ($query) {
+                        $query->where('esercizio', '2021');
+                    },
+                    'promo'
                     ])
                     ->orderBy('codicearti')
                     ->get();
@@ -85,7 +88,9 @@ class ListiniController extends Controller
                     'masterProd' => function($query){
                         $query->select('codice', 'descrizion');
                     },
-                    'wListOk'
+                    'wListOk' => function ($query) {
+                        $query->where('esercizio', '2021');
+                    }
                     ])
                     ->orderBy('gruppomag')
                     ->get();
@@ -115,10 +120,10 @@ class ListiniController extends Controller
         $date = Carbon::now();
         // $startOfYear = $date->copy()->startOfYear();
         $endOfYear   = $date->copy()->endOfYear();
-        if(RedisUser::get('ditta_DB')=='kNet_es' || (RedisUser::get('ditta_DB')=='kNet_it' && RedisUser::get('codag')=='002'))
+        /* if(RedisUser::get('ditta_DB')=='kNet_es' || (RedisUser::get('ditta_DB')=='kNet_it' && RedisUser::get('codag')=='002'))
         {
            $endOfYear = new Carbon('last day of December 2018');
-        }
+        } */
         // ->where('datafine', '<=', $endOfYear)
         $cliGrps = Listini::select('gruppocli')->where('gruppocli', '!=', '')
                         ->with(['grpCli'=>function($q){
@@ -150,6 +155,9 @@ class ListiniController extends Controller
                         $query->select('codice', 'descrizion', 'unmisura', 'gruppo', 'listino6', 'listino1')
                             ->withoutGlobalScope('Listino')
                             ->with('grpProd');
+                    },
+                    'wListOk' => function ($query) {
+                        $query->where('esercizio', '2021');
                     }
                     ])
                     ->orderBy('codicearti')
@@ -167,6 +175,9 @@ class ListiniController extends Controller
                     },
                     'masterProd' => function($query){
                         $query->select('codice', 'descrizion');
+                    },
+                    'wListOk' => function ($query) {
+                        $query->where('esercizio', '2021');
                     }
                     ])
                     ->orderBy('gruppomag')
@@ -197,7 +208,7 @@ class ListiniController extends Controller
             foreach($req->estendi as $listId){
                 $listOk = wListiniOk::create([
                     'listini_id'  =>$listId,
-                    'esercizio' => '2019',
+                    'esercizio' => '2021',
                 ]);
                 $listOk->save();
             }
@@ -212,34 +223,108 @@ class ListiniController extends Controller
 
     public function cliListScad(Request $req){
         $thisYear = Carbon::now()->year;
-        $date = Carbon::now();
+        $date = Carbon::now()->subMonths(6);
         // $startOfYear = $date->copy()->startOfYear();
         $endOfYear   = $date->copy()->endOfYear();
-        if(RedisUser::get('ditta_DB')=='kNet_es' || (RedisUser::get('ditta_DB')=='kNet_it' && RedisUser::get('codag')=='002'))
+        /* if(RedisUser::get('ditta_DB')=='kNet_es' || (RedisUser::get('ditta_DB')=='kNet_it' && RedisUser::get('codag')=='002'))
         {
            $endOfYear = new Carbon('last day of December 2018');
-        }
+        } */
 
         $customers = Listini::select(
+                            'id',
                             'codclifor',
-                            DB::raw('SUM(IF(codicearti!="", 1, 0)) as nCodArt'),
-                            DB::raw('SUM(IF(gruppomag!="", 1, 0)) as nGrpMag')
+                            DB::raw('IF(gruppomag!="", 1, 0) as nGrpMag'),
+                            DB::raw('IF(codicearti!="", 1, 0) as nCodArt'),
+                            DB::raw('0 as isPromo')
+                            // DB::raw('SUM(IF(w_listok.id IS NOT NULL, 1, 0)) as nListOk')
                             )
                         ->where('codclifor', '!=', '')->where('datafine', '<=', $endOfYear)
-                        ->whereDoesntHave('wListOk')
-                        ->with(['client'=>function($q){
-                            $q->select('codice', 'descrizion');
-                        }])
-                        ->groupBy('codclifor')
+                        // ->where('codclifor', 'C00023')
+                        // ->whereDoesntHave('wListOk')
+                        // ->whereHas('wListOk')
+                        ->with([
+                            'client'=>function($q){
+                                $q->select('codice', 'descrizion');
+                            },
+                            'wListOk'=>function($q){
+                                $q->select('listini_id', DB::raw('IF(id IS NOT NULL, 1, 0) as nList'))->where('esercizio', '2021');
+                            },
+                            'promo' => function ($q) {
+                                $q->select('id', 'id_listino', DB::raw('IF(id IS NOT NULL, 1, 0) as nPromo'));
+                            },
+                        ])
+                        // ->groupBy('codclifor')
                         ->orderBy('codclifor')->get();
-        // dd($customers->first());
+        // WorkAround for Promo
+        $customers->each(function ($listino, $key) {
+            $listino->isPromo = ($listino->promo->first() ? 1 : 0); 
+        });
+        // dd($customers->groupBy('codclifor'));
+        // dd($customers->groupBy('codclifor')->first()->where('nGrpMag', '!=', '1')->where('wListOk.nList', '==', '1')->count());
+        // dd($customers->groupBy('codclifor')->firstWhere('promo.nPromo', '==', '1'));
 
         return view('listini.cliListScad', [
-            'customers' => $customers,
+            'customers' => $customers->groupBy('codclifor'),
             'thisYear' => $thisYear,
             'endOfYear' => $endOfYear,
         ]);
 
+    }
+
+    public function grpListScad(Request $req)
+    {
+        $thisYear = Carbon::now()->year;
+        $date = Carbon::now()->subMonths(6);
+        // $startOfYear = $date->copy()->startOfYear();
+        $endOfYear   = $date->copy()->endOfYear();
+        /* if(RedisUser::get('ditta_DB')=='kNet_es' || (RedisUser::get('ditta_DB')=='kNet_it' && RedisUser::get('codag')=='002'))
+        {
+           $endOfYear = new Carbon('last day of December 2018');
+        } */
+
+        $customers = Listini::select(
+            'id',
+            'gruppocli',
+            DB::raw('IF(gruppomag!="", 1, 0) as nGrpMag'),
+            DB::raw('IF(codicearti!="", 1, 0) as nCodArt'),
+            DB::raw('0 as isPromo')
+            // DB::raw('SUM(IF(w_listok.id IS NOT NULL, 1, 0)) as nListOk')
+        )
+            ->where('gruppocli', '!=', '')->where('datafine', '<=', $endOfYear)
+            // ->where('gruppocli', 'BY')
+            // ->whereDoesntHave('wListOk')
+            // ->whereHas('wListOk')
+            ->whereHas('cliGrp')
+            ->with([
+                'grpCli' => function ($q) {
+                    $q->select('codice', 'descrizion');
+                },
+                'cliGrp' => function ($q) {
+                    $q->select('codice', 'descrizion', 'gruppolist');
+                },
+                'wListOk' => function ($q) {
+                    $q->select('listini_id', DB::raw('IF(id IS NOT NULL, 1, 0) as nList'))->where('esercizio', '2021');
+                },
+                'promo' => function ($q) {
+                    $q->select('id', 'id_listino', DB::raw('IF(id IS NOT NULL, 1, 0) as nPromo'));
+                },
+            ])
+            // ->groupBy('codclifor')
+            ->orderBy('gruppocli')->get();
+        // WorkAround for Promo
+        $customers->each(function ($listino, $key) {
+            $listino->isPromo = ($listino->promo->first() ? 1 : 0);
+        });
+        // dd($customers->groupBy('gruppocli')->last()->pluck('cliGrp')->unique());
+        // dd($customers->groupBy('codclifor')->first()->where('nGrpMag', '!=', '1')->where('wListOk.nList', '==', '1')->count());
+        // dd($customers->groupBy('codclifor')->firstWhere('promo.nPromo', '==', '1'));
+
+        return view('listini.grpListScad', [
+            'customers' => $customers->groupBy('gruppocli'),
+            'thisYear' => $thisYear,
+            'endOfYear' => $endOfYear,
+        ]);
     }
 
 }

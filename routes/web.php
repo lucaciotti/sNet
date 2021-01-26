@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,6 +74,10 @@ Route::group(['as' => 'user::'], function () {
     'as' => 'changeLang',
     'uses' => 'UserController@changeSelfLang'
   ]);
+  Route::get('/enasarcoXLS/{id?}', [
+    'as' => 'enasarcoXLS',
+    'uses' => 'UserController@enasarcoXLS'
+  ]);
 });
 
 Route::group(['as' => 'client::'], function () {
@@ -122,6 +129,10 @@ Route::group(['as' => 'doc::'], function () {
   Route::get('/docXLS/{id_testa?}', [
     'as' => 'downloadXLS',
     'uses' => 'DocCliController@downloadExcel'
+  ]);
+  Route::get('/docPDF/{id_testa}', [
+    'as' => 'downloadPDF',
+    'uses' => 'DocCliController@downloadPDF'
   ]);
 
 });
@@ -189,6 +200,17 @@ Route::group(['as' => 'listini::'], function () {
   Route::get('/cliListScad', [
     'as' => 'cliListScad',
     'uses' => 'ListiniController@cliListScad'
+  ]);
+  Route::get('/grpListScad', [
+    'as' => 'grpListScad',
+    'uses' => 'ListiniController@grpListScad'
+  ]);
+});
+
+Route::group(['as' => 'promo::'], function () {
+  Route::get('/promoList', [
+    'as' => 'idx',
+    'uses' => 'PromoController@idx'
   ]);
 });
 
@@ -276,8 +298,20 @@ Route::group(['as' => 'stAbc::'], function(){
     'as' => 'idxCli',
     'uses' => 'StAbcController@idxCli'
   ]);
+  Route::get('/stAbcArt', [
+    'as' => 'idxArt',
+    'uses' => 'StAbcController@idxArt'
+  ]);
+  Route::post('/stAbcArt', [
+    'as' => 'idxArt',
+    'uses' => 'StAbcController@idxArt'
+  ]);
   // ------------------------------
   Route::get('/stAbc/{codArt}', [
+    'as' => 'detailArt',
+    'uses' => 'StAbcController@detailArt'
+  ]);
+  Route::post('/stAbc/{codArt}', [
     'as' => 'detailArt',
     'uses' => 'StAbcController@detailArt'
   ]);
@@ -356,11 +390,11 @@ Route::group(['as' => 'schedaCli::'], function () {
   ]);
 });
 Route::group(['as' => 'schedaFat::'], function () {
-  Route::get('/schedaFatPDF/{codAg}', [
+  Route::get('/schedaFatPDF/{codAg?}', [
     'as' => 'PDF',
     'uses' => 'SchedaFattController@downloadPDF'
   ]);
-  Route::get('/schedaFatZonePDF/{codAg}', [
+  Route::get('/schedaFatZonePDF/{codAg?}', [
     'as' => 'ZonePDF',
     'uses' => 'SchedaFattController@downloadZonePDF'
   ]);
@@ -375,6 +409,10 @@ Route::group(['as' => 'schedaScad::'], function () {
   Route::get('/schedaProvPDF/{codAg}/{year?}', [
     'as' => 'ProvPDF',
     'uses' => 'SchedaScadController@downloadProvPDF'
+  ]);
+  Route::get('/schedaProvPP_PDF/{codAg}/{year?}', [
+    'as' => 'ProvPP_PDF',
+    'uses' => 'SchedaScadController@downloadProvPP_PDF'
   ]);
   Route::get('/schedaScadPDF/{codAg?}', [
     'as' => 'ScadPDF',
@@ -500,45 +538,45 @@ Route::group(['as' => 'manuale::'], function () {
   ]);
 });
 
-Route::any('zipcode', function() {
+// Route::any('zipcode', function() {
 
-    echo
-        Form::open(array('url' => 'zipcode')) .
-        Form::select('country', ZipCode::getAvailableCountries(), Input::get('country')) .
-        Form::text('zipcode', Input::get('zipcode')) .
-        Form::submit('go!') .
-        Form::close();
+//     echo
+//         Form::open(array('url' => 'zipcode')) .
+//         Form::select('country', ZipCode::getAvailableCountries(), Input::get('country')) .
+//         Form::text('zipcode', Input::get('zipcode')) .
+//         Form::submit('go!') .
+//         Form::close();
 
-    if (Input::get('country'))
-    {
-        ZipCode::setCountry(Input::get('country'));
-        /* ZipCode::setPreferredWebService('Geonames');
-        ZipCode::setQueryParameter('geonames_username', 'lucac18i'); */
+//     if (Input::get('country'))
+//     {
+//         ZipCode::setCountry(Input::get('country'));
+//         /* ZipCode::setPreferredWebService('Geonames');
+//         ZipCode::setQueryParameter('geonames_username', 'lucac18i'); */
 
-        //$webService = ZipCode::getWebServiceByName('Geonames');
-        //$webService->setUrl('http://api.zippopotam.ca');
-        $result = ZipCode::find(Input::get('zipcode'));
+//         //$webService = ZipCode::getWebServiceByName('Geonames');
+//         //$webService->setUrl('http://api.zippopotam.ca');
+//         $result = ZipCode::find(Input::get('zipcode'));
 
-        echo '<pre>';
+//         echo '<pre>';
 
-        // var_dump($result->toArray());
-        if($result->getSuccess() && $result->getWebService()=="Geonames"){
-          echo "Città: ".($result->getAddresses())[0]['city'];
-          echo '<br>';
-          echo "Provincia: ".($result->getAddresses())[0]['department'];
-          echo '<br>';
-          echo "PROV: ".($result->getAddresses())[0]['department_id'];
-          echo '<br>';
-          echo "Regione: ".($result->getAddresses())[0]['state_name'];
-          echo '<br>';
-          echo ($result->getCountryId());
-          echo '<br>';
-          echo ($result->getCountryName());
-        } else {
-          echo 'NOT FOUND!!';
-        }
+//         // var_dump($result->toArray());
+//         if($result->getSuccess() && $result->getWebService()=="Geonames"){
+//           echo "Città: ".($result->getAddresses())[0]['city'];
+//           echo '<br>';
+//           echo "Provincia: ".($result->getAddresses())[0]['department'];
+//           echo '<br>';
+//           echo "PROV: ".($result->getAddresses())[0]['department_id'];
+//           echo '<br>';
+//           echo "Regione: ".($result->getAddresses())[0]['state_name'];
+//           echo '<br>';
+//           echo ($result->getCountryId());
+//           echo '<br>';
+//           echo ($result->getCountryName());
+//         } else {
+//           echo 'NOT FOUND!!';
+//         }
 
-        echo '</pre>';
-    }
+//         echo '</pre>';
+//     }
 
-});
+// });

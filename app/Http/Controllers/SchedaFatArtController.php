@@ -11,6 +11,7 @@ use knet\ArcaModels\Agent;
 use knet\ArcaModels\Product;
 use knet\Exports\StatFatArtExport;
 use knet\Exports\StatFatArtListCliExport;
+use knet\Helpers\AgentFltUtils;
 use knet\Helpers\PdfReport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -81,7 +82,7 @@ class SchedaFatArtController extends Controller
         }
         $fatList->whereRaw('u_statfatt_art.codicecf = ?', [$codCli]);
         $fatList->whereRaw('u_statfatt_art.esercizio >= ?', [$thisYear - $yearBack]);
-        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA', 'BONU']);
+        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA']);
         $fatList->whereRaw('(LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,3) != ?)', ['C', '2', 'DIC']);
         if ($req->input('grpPrdSelected')) {
             $fatList->whereIn('u_statfatt_art.gruppo', $req->input('grpPrdSelected'));
@@ -171,7 +172,7 @@ class SchedaFatArtController extends Controller
         }
         $fatList->whereRaw('u_statfatt_art.codicecf = ?', [$codCli]);
         $fatList->whereRaw('u_statfatt_art.esercizio >= ?', [$thisYear - $yearBack]);
-        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA', 'BONU']);
+        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA']);
         $fatList->whereRaw('(LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,3) != ?)', ['C', '2', 'DIC']);
         if ($req->input('grpPrdSelected')) {
             $fatList->whereIn('u_statfatt_art.gruppo', $req->input('grpPrdSelected'));
@@ -197,6 +198,7 @@ class SchedaFatArtController extends Controller
         $agentList = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orderBy('codice')->get();
         $codAg = ($req->input('codag')) ? $req->input('codag') : $codAg;
         $fltAgents = (!empty($codAg)) ? $codAg : array_wrap((!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agentList->first()->codice));
+        $fltAgents = AgentFltUtils::checkSpecialRules($fltAgents);
         $thisYear = (Carbon::now()->year);
         $settoreSelected = ($req->input('settoreSelected')) ? $req->input('settoreSelected') : null;
         $zoneSelected = ($req->input('zoneSelected')) ? $req->input('zoneSelected') : null;
@@ -256,7 +258,7 @@ class SchedaFatArtController extends Controller
         }
         $fatList->whereRaw('u_statfatt_art.esercizio >= ?', [$thisYear - $yearBack]);
         $fatList->whereIn('anagrafe.agente', $fltAgents);
-        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA', 'BONU']);
+        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA']);
         $fatList->whereRaw('(LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,3) != ?)', ['C', '2', 'DIC']);
         if ($settoreSelected != null) $fatList->whereIn('anagrafe.settore', $settoreSelected);
         if ($zoneSelected != null) $fatList->whereIn('anagrafe.zona', $zoneSelected);
@@ -298,6 +300,7 @@ class SchedaFatArtController extends Controller
         $agentList = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orderBy('codice')->get();
         $codAg = ($req->input('codag')) ? $req->input('codag') : $codAg;
         $fltAgents = (!empty($codAg)) ? $codAg : array_wrap((!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agentList->first()->codice));
+        $fltAgents = AgentFltUtils::checkSpecialRules($fltAgents);
         $thisYear = (Carbon::now()->year);
         $settoreSelected = ($req->input('settoreSelected')) ? $req->input('settoreSelected') : null;
         $zoneSelected = ($req->input('zoneSelected')) ? $req->input('zoneSelected') : null;
@@ -357,7 +360,7 @@ class SchedaFatArtController extends Controller
         }
         $fatList->whereRaw('u_statfatt_art.esercizio >= ?', [$thisYear - $yearBack]);
         $fatList->whereIn('anagrafe.agente', $fltAgents);
-        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA', 'BONU']);
+        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA']);
         $fatList->whereRaw('(LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,3) != ?)', ['C', '2', 'DIC']);
         if ($settoreSelected != null) $fatList->whereIn('anagrafe.settore', $settoreSelected);
         if ($zoneSelected != null) $fatList->whereIn('anagrafe.zona', $zoneSelected);
@@ -385,6 +388,7 @@ class SchedaFatArtController extends Controller
         $agentList = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orderBy('codice')->get();
         $codAg = ($req->input('codag')) ? $req->input('codag') : $codAg;
         $fltAgents = (!empty($codAg)) ? $codAg : array_wrap((!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agentList->first()->codice));
+        $fltAgents = AgentFltUtils::checkSpecialRules($fltAgents);
         $thisYear = (Carbon::now()->year);
         $settoreSelected = ($req->input('settoreSelected')) ? $req->input('settoreSelected') : null;
         $zoneSelected = ($req->input('zoneSelected')) ? $req->input('zoneSelected') : null;
@@ -419,7 +423,7 @@ class SchedaFatArtController extends Controller
         }
         // $fatList->whereRaw('anagrafe.agente = ? AND LENGTH(anagrafe.agente) = ?', [$agente, strlen($agente)]);
         $fatList->whereIn('anagrafe.agente', $fltAgents);
-        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA', 'BONU']);
+        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA']);
         $fatList->whereRaw('(LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,3) != ?)', ['C', '2', 'DIC']);
         if ($settoreSelected != null) $fatList->whereIn('anagrafe.settore', $settoreSelected);
         if ($zoneSelected != null) $fatList->whereIn('anagrafe.zona', $zoneSelected);
@@ -460,6 +464,7 @@ class SchedaFatArtController extends Controller
         $agentList = Agent::select('codice', 'descrizion')->whereNull('u_dataini')->orderBy('codice')->get();
         $codAg = ($req->input('codag')) ? $req->input('codag') : $codAg;
         $fltAgents = (!empty($codAg)) ? $codAg : array_wrap((!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agentList->first()->codice));
+        $fltAgents = AgentFltUtils::checkSpecialRules($fltAgents);
         $thisYear = (Carbon::now()->year);
         $settoreSelected = ($req->input('settoreSelected')) ? $req->input('settoreSelected') : null;
         $zoneSelected = ($req->input('zoneSelected')) ? $req->input('zoneSelected') : null;
@@ -494,7 +499,7 @@ class SchedaFatArtController extends Controller
         }
         // $fatList->whereRaw('anagrafe.agente = ? AND LENGTH(anagrafe.agente) = ?', [$agente, strlen($agente)]);
         $fatList->whereIn('anagrafe.agente', $fltAgents);
-        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA', 'BONU']);
+        $fatList->whereRaw('(LEFT(u_statfatt_art.codicearti,4) != ? AND LEFT(u_statfatt_art.codicearti,4) != ?)', ['CAMP', 'NOTA']);
         $fatList->whereRaw('(LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,1) != ? AND LEFT(u_statfatt_art.gruppo,3) != ?)', ['C', '2', 'DIC']);
         if ($settoreSelected != null) $fatList->whereIn('anagrafe.settore', $settoreSelected);
         if ($zoneSelected != null) $fatList->whereIn('anagrafe.zona', $zoneSelected);

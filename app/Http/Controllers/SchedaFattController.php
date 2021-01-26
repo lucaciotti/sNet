@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use knet\ArcaModels\StatFatt;
 use knet\ArcaModels\Client;
 use knet\ArcaModels\Agent;
-
+use knet\Helpers\AgentFltUtils;
 use knet\Helpers\PdfReport;
 
 class SchedaFattController extends Controller
@@ -18,12 +18,13 @@ class SchedaFattController extends Controller
       $this->middleware('auth');
     }
 
-    public function downloadPDF(Request $req, $codAg){
-        $agente = Agent::select('codice', 'descrizion')->where('codice', $codAg)->where(DB::raw('LENGTH(codice)'), strlen($codAg))->orderBy('codice')->first();
-        
+    public function downloadPDF(Request $req, $codAg=null){
+        // $agente = Agent::select('codice', 'descrizion')->where('codice', $codAg)->where(DB::raw('LENGTH(codice)'), strlen($codAg))->orderBy('codice')->first();
+        $codAg = ($req->input('fltAgents')) ? $req->input('fltAgents') : ($codAg ? array_wrap($codAg) : $codAg);
+        $codAg = AgentFltUtils::checkSpecialRules($codAg);
+        $agentList = Agent::select('codice', 'descrizion')->whereIn('codice', $codAg)->orderBy('codice')->get();
         $thisYear = (string)(Carbon::now()->year);
         $prevYear = (string)((Carbon::now()->year)-1);
-
         // (Legenda PY -> Previous Year ; TY -> This Year)
         $fat_TY = StatFatt::select('agente', 'tipologia',
                                     DB::raw('ROUND(SUM(valore1),2) as valore1'),
@@ -41,16 +42,11 @@ class SchedaFattController extends Controller
                                     DB::raw('ROUND(SUM(fattmese),2) as fattmese')
                                     )
                             ->where('codicecf', 'CTOT')
-                            ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                            ->whereIn('agente', $codAg)
                             ->where('esercizio', $thisYear)
                             ->where('tipologia', 'FATTURATO')
                             ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET'])
-                            ->groupBy(['agente', 'tipologia'])
-                            ->with([
-                                'agent' => function($query){
-                                $query->select('codice', 'descrizion');
-                                }
-                                ])
+                            ->groupBy(['tipologia'])
                             ->get();
         
         $fat_PY = StatFatt::select('agente', 'tipologia',
@@ -69,16 +65,11 @@ class SchedaFattController extends Controller
                                     DB::raw('ROUND(SUM(fattmese),2) as fattmese')
                                     )
                             ->where('codicecf', 'CTOT')
-                            ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                            ->whereIn('agente', $codAg)
                             ->where('esercizio', $prevYear)
                             ->where('tipologia', 'FATTURATO')
                             ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET'])
-                            ->groupBy(['agente', 'tipologia'])
-                            ->with([
-                                'agent' => function($query){
-                                $query->select('codice', 'descrizion');
-                                }
-                                ])
+                            ->groupBy(['tipologia'])
                             ->get();
         $prevMonth = (Carbon::now()->month);
         $valMese = 'valore' . $prevMonth;
@@ -112,9 +103,9 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore9,2), 0)) as val_PY_9'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore10,2), 0)) as val_PY_10'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
-                    DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
-                    )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')
+                )
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -158,7 +149,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -166,10 +157,10 @@ class SchedaFattController extends Controller
                     ->groupBy(['codicecf'])->get();
 
         $title = "Scheda Fatturato Agente";
-        $subTitle = ($agente) ? $agente->descrizion : "NONE";
+        $subTitle = 'Totale';
         $view = '_exports.pdf.schedaFatPdf';
         $data = [
-            'agente' => $agente,
+            'agentList' => $agentList,
             'fat_TY' => $fat_TY,
             'fat_PY' => $fat_PY,
             'fatZone' => $fatZone,
@@ -184,9 +175,11 @@ class SchedaFattController extends Controller
         return $pdf->stream($title.'-'.$subTitle.'.pdf');
     }
 
-    public function downloadZonePDF(Request $req, $codAg){
-        $agente = Agent::select('codice', 'descrizion')->where('codice', $codAg)->where(DB::raw('LENGTH(codice)'), strlen($codAg))->orderBy('codice')->first();
-        
+    public function downloadZonePDF(Request $req, $codAg=null){
+        // $agente = Agent::select('codice', 'descrizion')->where('codice', $codAg)->where(DB::raw('LENGTH(codice)'), strlen($codAg))->orderBy('codice')->first();
+        $codAg = ($req->input('fltAgents')) ? $req->input('fltAgents') : ($codAg ? array_wrap($codAg) : $codAg);
+        $codAg = AgentFltUtils::checkSpecialRules($codAg);
+        $agentList = Agent::select('codice', 'descrizion')->whereIn('codice', $codAg)->orderBy('codice')->get();
         $thisYear = (string)(Carbon::now()->year);
         $prevYear = (string)((Carbon::now()->year)-1);
 
@@ -219,7 +212,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -263,7 +256,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -297,7 +290,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -341,7 +334,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -375,7 +368,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -419,7 +412,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -453,7 +446,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -497,7 +490,7 @@ class SchedaFattController extends Controller
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore11,2), 0)) as val_PY_11'),
                     DB::raw('SUM(IF(esercizio="'.$prevYear.'", ROUND(valore12,2), 0)) as val_PY_12')               
                     )
-                    ->where('agente', $codAg)->where(DB::raw('LENGTH(agente)'), strlen($codAg))
+                    ->whereIn('agente', $codAg)
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
@@ -505,10 +498,10 @@ class SchedaFattController extends Controller
                     ->groupBy(['codicecf'])->get();
 
         $title = "Scheda Fatturato Agente";
-        $subTitle = ($agente) ? $agente->descrizion : "NONE";
+        $subTitle = 'ZONE';
         $view = '_exports.pdf.schedaFatZonePdf';
         $data = [
-            'agente' => $agente,
+            'agentList' => $agentList,
             'fatZone_KR' => $fatZone_KR,
             'fatTot_KR' => $fatTot_KR->first(),
             'fatZone_KO' => $fatZone_KO,

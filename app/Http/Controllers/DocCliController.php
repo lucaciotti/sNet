@@ -17,7 +17,8 @@ use knet\Helpers\RedisUser;
 use knet\ExportsXLS\DocExport;
 
 use Spatie\ArrayToXml\ArrayToXml;
-use File;
+use Illuminate\Support\Facades\File;
+use knet\Helpers\PdfReport;
 use PDF;
 
 class DocCliController extends Controller
@@ -33,7 +34,12 @@ class DocCliController extends Controller
     }
     $docs = DocCli::select('id', 'tipodoc', 'numerodoc', 'datadoc', 'codicecf', 'numerodocf', 'numrighepr', 'totdoc');
     if ($tipomodulo){
-      $docs = $docs->where('tipomodulo', $tipomodulo);
+      $docs = $docs->where(function ($query) use ($tipomodulo) {
+        $query->where('tipomodulo', $tipomodulo);
+        if ($tipomodulo == 'B') {
+          $query = $query->orWhereIn('tipodoc', ['BV', 'BI', 'BS']);
+        }
+      });     
     }
     $docs = $docs->where('datadoc', '>=', Carbon::now()->subMonth());
     $docs = $docs->with(['client' => function($query) {
@@ -78,7 +84,16 @@ class DocCliController extends Controller
 
   public function fltIndex (Request $req){
     $docs = DocCli::select('id', 'tipodoc', 'numerodoc', 'datadoc', 'codicecf', 'numerodocf', 'numrighepr', 'totdoc');
-    $docs = $docs->where('tipomodulo', 'LIKE', ($req->input('optTipoDoc')=='' ? '%' : $req->input('optTipoDoc')));
+    $docs = $docs->where(function ($query) use ($req){
+        $query->where('tipomodulo', 'LIKE', ($req->input('optTipoDoc') == '' ? '%' : $req->input('optTipoDoc')));
+        if ($req->input('optTipoDoc') == 'B') {
+          $query = $query->orWhereIn('tipodoc', ['BV', 'BI', 'BS']);
+        }
+    });
+    // $docs = $docs->where('tipomodulo', 'LIKE', ($req->input('optTipoDoc')=='' ? '%' : $req->input('optTipoDoc')));
+    // if ($req->input('optTipoDoc') == 'B') {
+    //   $docs = $docs->orWhereIn('tipodoc', ['BV', 'BK', 'BI', 'BS']);
+    // }
     if($req->input('startDate')){
       $startDate = Carbon::createFromFormat('d/m/Y',$req->input('startDate'));
       $endDate = Carbon::createFromFormat('d/m/Y',$req->input('endDate'));
@@ -161,11 +176,15 @@ class DocCliController extends Controller
 
   public function docCli (Request $req, $codice, $tipomodulo=null){
     $docs = DocCli::select('id', 'tipodoc', 'numerodoc', 'datadoc', 'codicecf', 'numerodocf', 'numrighepr', 'totdoc');
-    if ($tipomodulo){
-      $docs = $docs->where('tipomodulo', $tipomodulo)->where('codicecf', $codice);
-    } else {
-      $docs = $docs->where('codicecf', $codice);
+    if ($tipomodulo) {
+      $docs = $docs->where(function ($query) use ($tipomodulo) {
+        $query->where('tipomodulo', $tipomodulo);
+        if ($tipomodulo == 'B') {
+          $query = $query->orWhereIn('tipodoc', ['BV', 'BI', 'BS']);
+        }
+      });
     }
+    $docs = $docs->where('codicecf', $codice);
     $docs = $docs->with(['client' => function($query) {
       $query
       ->withoutGlobalScope('agent')
@@ -485,4 +504,61 @@ class DocCliController extends Controller
     return $pdf->stream('test.pdf'); */
   }
 
+  public function downloadPDF(Request $req, $id_testa)
+  {
+    $tipoDoc = DocCli::select('tipomodulo')->findOrFail($id_testa);
+    $head = DocCli::with(['client' => function ($query) {
+      $query
+        ->withoutGlobalScope('agent')
+        ->withoutGlobalScope('superAgent')
+        ->withoutGlobalScope('client');
+    }, 'agent']);
+    if ($tipoDoc->tipomodulo == 'F') {
+      $head = $head->with(['scadenza' => function ($query) {
+        $query
+          ->withoutGlobalScope('agent')
+          ->withoutGlobalScope('superAgent')
+          ->withoutGlobalScope('client');
+      }]);
+    } elseif ($tipoDoc->tipomodulo == 'B') {
+      $head = $head->with('vettore', 'detBeni');
+    }
+    $head = $head->findOrFail($id_testa);
+    if ($tipoDoc->tipomodulo == 'B') {
+      $destDiv = Destinaz::where('codicecf', $head->codicecf)->where('codicedes', $head->destdiv)->first();
+      $ddtOk = wDdtOk::where('id_testa', $head->id)->first();
+    } else {
+      $destDiv = null;
+      $ddtOk = null;
+    }
+    $rows = DocRow::where('id_testa', $id_testa)->orderBy('numeroriga', 'asc');
+    if (RedisUser::get('location') != RedisUser::get('lang')) {
+      // dd(RedisUser::getAll());
+      $rows->with('descrLangEN');
+    }
+    $rows=$rows->get();
+    $prevIds = DocRow::distinct('riffromt')->where('id_testa', $id_testa)->where('riffromt', '!=', 0)->get();
+    $prevDocs = DocCli::select('id', 'tipodoc', 'numerodoc', 'datadoc')->whereIn('id', $prevIds->pluck('riffromt'))->get();
+    $nextIds = DocRow::distinct('id_testa')->where('riffromt', $id_testa)->get();
+    $nextDocs = DocCli::select('id', 'tipodoc', 'numerodoc', 'datadoc')->whereIn('id', $nextIds->pluck('id_testa'))->get();
+
+    $totValueFOC = $rows->where('ommerce', true)->sum('prezzotot');
+    // dd($rows);
+    $title = "Doc Detail";
+    $subTitle = $head->tipodoc."_".$head->numerodoc."/".$head->esercizio;
+    $view = '_exports.pdf.docDetailPdf';
+    $data = [
+      'head' => $head,
+      'rows' => $rows,
+      'prevDocs' => $prevDocs,
+      'nextDocs' => $nextDocs,
+      'destinaz' => $destDiv,
+      'ddtOk' => $ddtOk,
+      'totValueFOC' => $totValueFOC,
+    ];
+    $pdf = PdfReport::A4Portrait($view, $data, $title, $subTitle);
+
+    return $pdf->stream($title . '-' . $subTitle . '.pdf');
+
+  }
 }
