@@ -65,7 +65,6 @@ return [
         
         // Deployment is done and live
         'done' => [
-            'fpm:reload',
         ],
         
         // Deployment succeeded.
@@ -93,7 +92,6 @@ return [
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
         'repository' => 'https://github.com/lucaciotti/sNet.git',
-        'php_fpm_service' => 'php7.0-fpm',
         'ssh_multiplexing' => false,
         'git_tty' => false,
     ],

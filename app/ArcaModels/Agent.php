@@ -13,6 +13,7 @@ class Agent extends Model
     protected $primaryKey = 'codice';
     public $incrementing = false;
     protected $connection = '';
+    protected $fillable = ['descrizion', 'email'];
 
     public function __construct ($attributes = array())
     {

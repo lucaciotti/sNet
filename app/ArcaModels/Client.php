@@ -17,6 +17,10 @@ class Client extends Model
     protected $primaryKey = 'codice';
     public $incrementing = false;
     protected $connection = '';
+    protected $fillable = ['descrizion', 'supragsoc', 'partiva', 
+                            'codfiscale', 'telefono', 'persdacont', 
+                            'email', 'indirizzo', 'cap', 
+                            'localita', 'prov', 'note'];
 
     // Scope that garante to find only Client from anagrafe
     protected static function boot()
