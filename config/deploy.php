@@ -109,7 +109,7 @@ return [
 
     'hosts' => [
         'gate.eur.aruba.jearuba.cloud -p 3022 ' => [
-            'deploy_path' => '/var/www/webroot/ROOT/dev.lucaciotti.space',
+            'deploy_path' => '/var/www/webroot/ROOT/demo.lucaciotti.space',
             'user' => '23028-2666',
             'stage' => 'production',
         ],
