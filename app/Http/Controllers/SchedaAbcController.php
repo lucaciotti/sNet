@@ -59,7 +59,8 @@ class SchedaAbcController extends Controller
                         ->where('isomaggio', false)
                         ->whereIn('esercizio', [''.$thisYear.'', ''.$prevYear.'']);
 
-        $AbcProds = $AbcProds->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBICA', 'PLANET']);
+        $AbcProds = $AbcProds
+            ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
 
         $AbcProds = $AbcProds->groupBy(['articolo', 'codag'])
                     ->with([

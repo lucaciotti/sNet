@@ -55,8 +55,8 @@
                         <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::grpCli') }}">Gruppo Clienti</a></li>
                         <li>&nbsp;</li>
                         @if (!in_array(RedisUser::get('role'), ['agent', 'client']))
-                            <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::cliListScad') }}">Listino Clienti in Scadenza</a></li>
-                            <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::grpListScad') }}">Listino Gruppi in Scadenza</a></li>
+                            <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::cliListScad') }}">List.Cli. in Scadenza</a></li>
+                            <li class="{{ Ekko::isActiveRoute('listini::grpCli') }}"><a href="{{ route('listini::grpListScad') }}">List.Gruppi in Scadenza</a></li>
                         @endif
                         <li>&nbsp;</li>
                         {{-- @if (!in_array(RedisUser::get('role'), ['agent', 'client']))
@@ -81,12 +81,12 @@
                 <ul class="treeview-menu">
                     <li class="{{ Ekko::isActiveRoute('visit::*') }}"><a href="{{ route('visit::insert') }}"> <span>{{ trans('_menu.insVisits') }}</span></a></li>
                     @if (RedisUser::get('ditta_DB')=='kNet_it')
-                        <li class="{{ Ekko::isActiveRoute('visit::*') }}"><a href="{{ route('visit::insertRubri') }}"> <span>Inserimento Visita Contatto</span></a></li>    
+                        <li class="{{ Ekko::isActiveRoute('visit::*') }}"><a href="{{ route('visit::insertRubri') }}"> <span>Ins. Visita Contatto</span></a></li>    
                     @endif
                 </ul>
               </li>
               {{-- @if (in_array(RedisUser::get('ditta_DB'), ['kNet_it'])) --}}
-                <li class=""><a href="http://2.115.99.233:8080" target="_blank"><i class='fa fa-calendar'></i> <span>Kalendar</span></a></li>
+                <li class=""><a href="" target="_blank"><i class='fa fa-calendar'></i> <span>Kalendar</span></a></li>
               {{-- @endif --}}
               <li><i class='fa fa-empty'></i></li>
 

@@ -54,27 +54,10 @@
 	</div>
 	<div class="row">
 		<div class="container">
-      @if (!in_array(RedisUser::get('role'), ['client']))
-      <div class="col-lg-6 col-xs-6">
-        <div class="small-box bg-green">
-          <a href="http://kalendar.kronakoblenz.it:8080" target="_blank">
-          <div class="inner">
-            <h3>&nbsp;</h3>
-            <p>Kalendar</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-calendar"></i>
-          </div>
-          </a>
-          <a href="http://kalendar.kronakoblenz.it:8080" target="_blank" class="small-box-footer">{{ trans('home.moreInfo') }}
-            <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      @else
       <div class="col-lg-6 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <h3>{{ $nArticoli }}</h3>
+            <h3><b class="caret"></b></h3>
             <p>{{ trans('home.newProd') }}</p>
           </div>
           <div class="icon">
@@ -83,7 +66,6 @@
           <a href="{{ route('prod::newProd') }}" class="small-box-footer">{{ trans('home.moreInfo') }} <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      @endif
       <div class="col-lg-6 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-red">
@@ -99,7 +81,7 @@
       </div>
 		</div>
   </div>
-  @if (!in_array(RedisUser::get('role'), ['client']))
+  {{-- @if (!in_array(RedisUser::get('role'), ['client']))
   <div class="row">
     <div class="container">
       <div class="col-lg-12">
@@ -107,7 +89,7 @@
       </div>
     </div>
   </div>
-  @endif
+  @endif --}}
 @else
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">

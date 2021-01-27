@@ -23,16 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `maggrp`
---
-
-CREATE TABLE `maggrp` (
-  `codice` varchar(5) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Codice Univoco',
-  `descrizion` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `livello` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Dump dei dati per la tabella `maggrp`
 --
 

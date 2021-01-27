@@ -23,18 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `w_mcarp01_sysKnown`
---
-
-CREATE TABLE `w_mcarp01_sysKnown` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `mcarp01_id` bigint(20) UNSIGNED NOT NULL,
-  `sysmkt_cod` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Dump dei dati per la tabella `w_mcarp01_sysKnown`
 --
 

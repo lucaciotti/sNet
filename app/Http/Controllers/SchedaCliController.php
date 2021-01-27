@@ -51,7 +51,7 @@ class SchedaCliController extends Controller
                           ->where('codicecf', $codice)
                           ->where('tipologia', 'FATTURATO')
                           ->where('esercizio', $thisYear)
-                          ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET'])
+                          ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C'])
                           ->groupBy(['codicecf', 'tipologia'])
                           ->get();
         $fatPrevYear = StatFatt::select('codicecf', 'tipologia',
@@ -72,7 +72,7 @@ class SchedaCliController extends Controller
                           ->where('codicecf', $codice)
                           ->where('tipologia', 'FATTURATO')
                           ->where('esercizio', $prevYear)
-                          ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET'])
+                          ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C'])
                           ->groupBy(['codicecf', 'tipologia'])
                           ->get();
 
@@ -109,7 +109,7 @@ class SchedaCliController extends Controller
                       ->where('codicecf', $codice)
                       ->where('isomaggio', false)
                       ->whereIn('esercizio', [$thisYear, $prevYear])
-                      ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBICA', 'PLANET'])
+                      ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C'])
                       ->groupBy(['articolo', 'codicecf'])
                       ->with([
                           'grpProd' => function($query){

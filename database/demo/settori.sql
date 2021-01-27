@@ -23,15 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `settori`
---
-
-CREATE TABLE `settori` (
-  `codice` varchar(3) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Codice Univoco',
-  `descrizion` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Dump dei dati per la tabella `settori`
 --
 

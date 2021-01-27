@@ -125,7 +125,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 <section id="contact" name="contact">
 <div id="footerwrap">
     <div class="container">
-        <div class="col-lg-5">
+        {{-- <div class="col-lg-5">
             <h3>Krona Koblenz S.P.A.</h3>
             <p>
                 via Piane 90,<br/>
@@ -133,7 +133,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 47853<br/>
                 Italy
             </p>
-        </div>
+        </div> --}}
 
     </div>
 </div>

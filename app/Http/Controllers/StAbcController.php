@@ -74,7 +74,7 @@ class StAbcController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $AbcProds = $AbcProds->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $AbcProds = $AbcProds->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBICA', 'PLANET']);
+        $AbcProds = $AbcProds->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }
       $AbcProds = $AbcProds->groupBy(['articolo', 'codag'])
                 ->with([
@@ -163,7 +163,7 @@ class StAbcController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $AbcProds = $AbcProds->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $AbcProds = $AbcProds->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBICA', 'PLANET']);
+        $AbcProds = $AbcProds->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }
       $AbcProds = $AbcProds->groupBy(['articolo', 'codicecf'])
                 ->with([
@@ -243,7 +243,7 @@ class StAbcController extends Controller
       if (!empty($req->input('optTipoDoc'))) {
         $AbcProds = $AbcProds->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $AbcProds = $AbcProds->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBICA', 'PLANET']);
+        $AbcProds = $AbcProds->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }
       $AbcProds->whereHas('product', function ($query) {
         $query->where('u_artlis', true);

@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ url('/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>k</b>Net</span>
+        <span class="logo-mini"><img src="{{ asset('/img/logo_ristretto.png') }}" alt="" ></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>kNet</b> 2.0 </span>
+        <span class="logo-lg"><img src="{{ asset('/img/logo_esteso.png') }}" alt="" height="50"></span>
     </a>
 
     <!-- Header Navbar -->
@@ -15,6 +15,16 @@
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">{{ trans('_message.togglenav') }}</span>
         </a>
+        {{-- <div class="btn-group">
+            
+            <a href="#" class="btn btn-primary navbar-btn dropdown-toggle" data-toggle="dropdown">
+                2.4 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-xs">
+                <li><a href="/docs/2.4/layout">2.4</a></li>
+                <li><a href="/themes/AdminLTE/documentation/index.html">&lt;= 2.3</a></li>
+            </ul>
+        </div> --}}
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             

@@ -23,24 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `w_visite`
---
-
-CREATE TABLE `w_visite` (
-  `id` bigint(20) UNSIGNED NOT NULL COMMENT 'ID univoco per ogni visita',
-  `codicecf` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Codice Cliente / Fornitore',
-  `rubri_id` bigint(20) DEFAULT NULL COMMENT 'Contatto rubrica della visita',
-  `user_id` bigint(20) NOT NULL COMMENT 'Utente della visita',
-  `data` date NOT NULL COMMENT 'Data della Visita',
-  `tipo` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Tipo di Visita',
-  `descrizione` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descrizione Visita',
-  `note` text COLLATE utf8_unicode_ci COMMENT 'Memo della Visita',
-  `modCarp_id` bigint(20) DEFAULT NULL COMMENT 'Riferimento a Modulo Falegnami',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Dump dei dati per la tabella `w_visite`
 --
 

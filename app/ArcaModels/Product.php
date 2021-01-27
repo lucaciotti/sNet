@@ -47,17 +47,17 @@ class Product extends Model
 
   public function getTipoProdAttribute(){
       if (substr($this->attributes['gruppo'],0,3)=="B06"){
-        $tipo = "Kubica";
+        $tipo = "GRUPPO A";
       } elseif (substr($this->attributes['gruppo'],0,1)=="B") {
-        $tipo = "Koblenz";
+        $tipo = "GRUPPO B";
       } elseif (substr($this->attributes['gruppo'],0,1)=="A") {
-        $tipo = "Krona";
+        $tipo = "GRUPPO C";
       } elseif (substr($this->attributes['gruppo'],0,1)=="C") {
-        $tipo = "Grass";
+        $tipo = "GRUPPO Z";
       } elseif (substr($this->attributes['gruppo'],0,1)=="2") {
-        $tipo = "Campioni";
+        $tipo = "GRUPPO Z";
       } else {
-        $tipo = "KK";
+        $tipo = "GRUPPO Z";
       }
       return $tipo;
   }

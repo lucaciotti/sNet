@@ -45,7 +45,7 @@ class SchedaFattController extends Controller
                             ->whereIn('agente', $codAg)
                             ->where('esercizio', $thisYear)
                             ->where('tipologia', 'FATTURATO')
-                            ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET'])
+                            ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C'])
                             ->groupBy(['tipologia'])
                             ->get();
         
@@ -68,7 +68,7 @@ class SchedaFattController extends Controller
                             ->whereIn('agente', $codAg)
                             ->where('esercizio', $prevYear)
                             ->where('tipologia', 'FATTURATO')
-                            ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET'])
+                            ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C'])
                             ->groupBy(['tipologia'])
                             ->get();
         $prevMonth = (Carbon::now()->month);
@@ -153,7 +153,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET'])
+                    ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C'])
                     ->groupBy(['codicecf'])->get();
 
         $title = "Scheda Fatturato Agente";
@@ -216,7 +216,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['KRONA'])
+                    ->whereIn('prodotto', ['GRUPPO C'])
                     ->groupBy(['codicecf'])
                     ->with([ 
                         'client' => function($query){
@@ -260,7 +260,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['KRONA'])
+                    ->whereIn('prodotto', ['GRUPPO C'])
                     ->groupBy(['codicecf'])->get();
         
         //KOBLENZ
@@ -294,7 +294,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['KOBLENZ'])
+                    ->whereIn('prodotto', ['GRUPPO B'])
                     ->groupBy(['codicecf'])
                     ->with([ 
                         'client' => function($query){
@@ -338,7 +338,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['KOBLENZ'])
+                    ->whereIn('prodotto', ['GRUPPO B'])
                     ->groupBy(['codicecf'])->get();
         
         //KUBICA
@@ -372,7 +372,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['KUBIKA'])
+                    ->whereIn('prodotto', ['GRUPPO A'])
                     ->groupBy(['codicecf'])
                     ->with([ 
                         'client' => function($query){
@@ -416,7 +416,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['KUBIKA'])
+                    ->whereIn('prodotto', ['GRUPPO A'])
                     ->groupBy(['codicecf'])->get();
 
         // PLANET        
@@ -450,7 +450,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', "!=", 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['PLANET'])
+                    ->whereIn('prodotto', ['GRUPPO D'])
                     ->groupBy(['codicecf'])
                     ->with([ 
                         'client' => function($query){
@@ -494,7 +494,7 @@ class SchedaFattController extends Controller
                     ->whereIn('esercizio', [$thisYear, $prevYear])
                     ->where('codicecf', 'CTOT')
                     ->where('tipologia', 'FATTURATO')
-                    ->whereIn('prodotto', ['PLANET'])
+                    ->whereIn('prodotto', ['GRUPPO D'])
                     ->groupBy(['codicecf'])->get();
 
         $title = "Scheda Fatturato Agente";

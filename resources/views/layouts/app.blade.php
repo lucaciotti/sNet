@@ -5,7 +5,7 @@
     @include('layouts.partials.htmlheader')
 @show
 
-<body class="skin-green sidebar-mini sidebar-collapse">
+<body class="skin-blue sidebar-mini sidebar-collapse">
     <div id="app" class="wrapper">
 
         @include('layouts.partials.mainheader')

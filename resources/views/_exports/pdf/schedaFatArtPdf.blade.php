@@ -12,7 +12,7 @@
             </div>
         @endif
         
-        @if(!empty($fatList->where('tipoProd', 'KRONA')->first()))
+        @if(!empty($fatList->where('tipoProd', 'GRUPPO A')->first()))
             <div class="row">
                 <div class="contentTitle">
                     KRONA
@@ -26,7 +26,7 @@
                 </div>
 
                 @include('_exports.pdf.schedaFatArt.tblDetail', [
-                'fatList' => $fatList->where('tipoProd', 'KRONA'),
+                'fatList' => $fatList->where('tipoProd', 'GRUPPO A'),
                 'thisYear' => $thisYear,
                 'yearBack' => $yearback,
                 ])
@@ -38,7 +38,7 @@
             </div>
         @endif
         
-        @if(!empty($fatList->where('tipoProd', 'KOBLENZ')->first()))
+        @if(!empty($fatList->where('tipoProd', 'GRUPPO B')->first()))
             <div class="row">
                 <div class="contentTitle">
                     KOBLENZ
@@ -52,7 +52,7 @@
                 </div>
             
                 @include('_exports.pdf.schedaFatArt.tblDetail', [
-                'fatList' => $fatList->where('tipoProd', 'KOBLENZ'),
+                'fatList' => $fatList->where('tipoProd', 'GRUPPO B'),
                 'thisYear' => $thisYear,
                 'yearBack' => $yearback,
                 ])
@@ -64,7 +64,7 @@
             </div>
         @endif
 
-        @if(!empty($fatList->where('tipoProd', 'KUBIKA')->first()))        
+        @if(!empty($fatList->where('tipoProd', 'GRUPPO C')->first()))        
             <div class="row">
                 <div class="contentTitle">
                     KUBICA - HINGES
@@ -78,7 +78,7 @@
                 </div>
             
                 @include('_exports.pdf.schedaFatArt.tblDetail', [
-                'fatList' => $fatList->where('tipoProd', 'KUBIKA'),
+                'fatList' => $fatList->where('tipoProd', 'GRUPPO C'),
                 'thisYear' => $thisYear,
                 'yearBack' => $yearback,
                 ])        

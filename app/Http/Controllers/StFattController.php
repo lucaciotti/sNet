@@ -60,7 +60,7 @@ class StFattController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $fat_TY = $fat_TY->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $fat_TY = $fat_TY->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET']);
+        $fat_TY = $fat_TY->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }          
       $fat_TY = $fat_TY->groupBy(['tipologia'])
                           ->get();
@@ -97,7 +97,7 @@ class StFattController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $fat_PY = $fat_PY->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $fat_PY = $fat_PY->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET']);
+        $fat_PY = $fat_PY->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }          
       $fat_PY = $fat_PY->groupBy(['tipologia'])
                           ->get();
@@ -175,7 +175,7 @@ class StFattController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $fat_TY = $fat_TY->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $fat_TY = $fat_TY->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET']);
+        $fat_TY = $fat_TY->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }          
       $fat_TY = $fat_TY->groupBy(['codicecf', 'tipologia'])
                           ->with([
@@ -213,7 +213,7 @@ class StFattController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $fat_PY = $fat_PY->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $fat_PY = $fat_PY->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA']);
+        $fat_PY = $fat_PY->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }          
       $fat_PY = $fat_PY->groupBy(['codicecf', 'tipologia'])
                           ->with([
@@ -308,7 +308,7 @@ class StFattController extends Controller
                           ->whereHas('agent', function ($query) use ($manager) {
                               $query->where('u_capoa', $manager);
                             })
-                          ->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA'])
+                          ->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C'])
                           ->where('tipologia', 'FATTURATO')
                           ->groupBy(['tipologia'])
                           ->get();
@@ -403,7 +403,7 @@ class StFattController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $fatZone = $fatZone->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $fatZone = $fatZone->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET']);
+        $fatZone = $fatZone->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }          
       $fatZone = $fatZone->groupBy(['codicecf'])
                   ->with([ 
@@ -452,7 +452,7 @@ class StFattController extends Controller
       if(!empty($req->input('optTipoDoc'))) {
         $fatTot = $fatTot->where('prodotto', $req->input('optTipoDoc'));
       } else {
-        $fatTot = $fatTot->whereIn('prodotto', ['KRONA', 'KOBLENZ', 'KUBIKA', 'PLANET']);
+        $fatTot = $fatTot->whereIn('prodotto', ['GRUPPO A', 'GRUPPO B', 'GRUPPO C']);
       }          
       $fatTot = $fatTot->groupBy(['codicecf'])->get();
 

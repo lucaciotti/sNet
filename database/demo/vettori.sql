@@ -23,24 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `vettori`
---
-
-CREATE TABLE `vettori` (
-  `codice` varchar(4) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Codice Univoco',
-  `descrizion` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Ragione Sociale Vettore',
-  `indirizzo` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Indirizzo',
-  `cap` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'CAP',
-  `localita` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Località',
-  `pv` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Provincia',
-  `telefono` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Telefono',
-  `fax` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Fax',
-  `email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Email',
-  `fornitore` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Fornitore Collegato',
-  `note` text COLLATE utf8_unicode_ci COMMENT 'Sito Tracking'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Dump dei dati per la tabella `vettori`
 --
 

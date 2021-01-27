@@ -22,15 +22,6 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
--- Struttura della tabella `pagament`
---
-
-CREATE TABLE `pagament` (
-  `codice` varchar(4) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Codice Univoco',
-  `descrizion` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tipopag` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'D=Rimessa Diretta; R=Ricevuta Bancaria; T=Tratta; P=Pagherò; B=Bonifico; L=Bollettino; C=Contrassegno; A=Altro; V=Scadenze Variabili'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dump dei dati per la tabella `pagament`

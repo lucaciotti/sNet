@@ -23,19 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `w_system_mkt`
---
-
-CREATE TABLE `w_system_mkt` (
-  `codice` varchar(6) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Codice Univoco',
-  `livello` int(11) NOT NULL COMMENT 'Livello di dettaglio: 0 -> Krona,Koblenz... ; 1 -> System Generico ; 2 -> System specifico ',
-  `descrizione` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descrizione System',
-  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Link Sito Mkt',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Dump dei dati per la tabella `w_system_mkt`
 --
 
