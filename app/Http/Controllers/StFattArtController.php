@@ -26,7 +26,7 @@ class StFattArtController extends Controller
         $fltAgents = (!empty($codAg)) ? $codAg : array_wrap((!empty(RedisUser::get('codag')) ? RedisUser::get('codag') : $agentList->first()->codice));
         $fltAgents = AgentFltUtils::checkSpecialRules($fltAgents);
         $thisYear = (Carbon::now()->year);
-        $zoneList = strpos($codAg[0], 'A')==0 ? Zona::whereRaw('LEFT(codice,1)=?', ['0'])->get() : Zona::whereRaw('LEFT(codice,1)!=?', ['0'])->get();
+        $zoneList = Zona::all();
         $grpPrdList = SubGrpProd::where('codice', 'NOT LIKE', '1%')
             ->where('codice', 'NOT LIKE', 'DIC%')
             ->where('codice', 'NOT LIKE', '0%')
