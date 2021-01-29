@@ -32,12 +32,12 @@
 
 <span class="floatright">
     @if (in_array(RedisUser::get('location'), ['it']))
-    <img src="{{ asset('/img/loghi/KK-AEO_logo_col.jpg') }}" alt="" height="120" align="right">
+    <img src="{{ asset('/img/loghi/logo_ristretto.png') }}" alt="" height="120" align="right">
     @endif
     @if (in_array(RedisUser::get('location'), ['es']))
-    <img src="{{ asset('/img/loghi/KK_SP.jpg') }}" alt="" height="120" align="right">
+    <img src="{{ asset('/img/loghi/logo_ristretto.png') }}" alt="" height="120" align="right">
     @endif
     @if (in_array(RedisUser::get('location'), ['fr']))
-    <img src="{{ asset('/img/loghi/KK_FR.jpg') }}" alt="" height="120" align="right">
+    <img src="{{ asset('/img/loghi/logo_ristretto.png') }}" alt="" height="120" align="right">
     @endif
 </span>
