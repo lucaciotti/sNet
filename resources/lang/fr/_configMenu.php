@@ -21,9 +21,9 @@ return [
 
     'extraSettings'           => 'Paramètres Avancés',
     'usersManage'             => 'Gestion Utilisateurs',
-    'usersManageDesc'         => 'Tableau de la Gestion Utilisateurs K-Group.',
+    'usersManageDesc'         => 'Tableau de la Gestion Utilisateurs.',
     'clientsManage'           => 'Gestion Clients',
-    'clientsManageDesc'       => 'Tableau de la Gestion Clients K-Group.',
+    'clientsManageDesc'       => 'Tableau de la Gestion Clients.',
     'importUsers'             => 'Importation Utilisateurs',
     'importUsersDesc'         => 'Instrument d\'importation Utilisateurs depuis excel.',
 

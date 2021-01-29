@@ -17,7 +17,7 @@ return [
 
     'orderDeliver'            => 'Orders to ship',
     'ddtReceive'              => 'Incoming Shippings',
-    'newProd'                 => 'New K-Group Products',
+    'newProd'                 => 'New Products',
     'debtPay'                 => 'Payment Deadlines',
 
     'moreInfo'                => 'More Info',

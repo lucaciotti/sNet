@@ -20,13 +20,13 @@
                 <input type="radio" name="optTipoProd" id="opt1" value="" @if(!isset($optTipoProd)) checked @endif> {{ trans('doc.allDocs') }}
             </label>
             <label>
-                <input type="radio" name="optTipoProd" id="opt2" value="KRONA" @if(isset($optTipoProd) && $optTipoProd=="KRONA") checked @endif> Krona
+                <input type="radio" name="optTipoProd" id="opt2" value="GRUPPO A" @if(isset($optTipoProd) && $optTipoProd=="GRUPPO A") checked @endif> GRUPPO A
             </label>
             <label>
-                <input type="radio" name="optTipoProd" id="opt3" value="KOBLENZ" @if(isset($optTipoProd) && $optTipoProd=="KOBLENZ") checked @endif> Koblenz
+                <input type="radio" name="optTipoProd" id="opt3" value="GRUPPO B" @if(isset($optTipoProd) && $optTipoProd=="GRUPPO B") checked @endif> GRUPPO B
             </label>
             <label>
-                <input type="radio" name="optTipoProd" id="opt4" value="KUBIKA" @if(isset($optTipoProd) && $optTipoProd=="KUBIKA") checked @endif> Kubica
+                <input type="radio" name="optTipoProd" id="opt4" value="GRUPPO C" @if(isset($optTipoProd) && $optTipoProd=="GRUPPO C") checked @endif> GRUPPO C
             </label>
             @if(RedisUser::get('ditta')=='knet_es')
             <label>

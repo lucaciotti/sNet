@@ -21,9 +21,9 @@ return [
 
     'extraSettings'           => 'Impostazioni Avanzate',
     'usersManage'             => 'Gestione Utenti',
-    'usersManageDesc'         => 'Tabella della Gestione Utenti K-Group.',
+    'usersManageDesc'         => 'Tabella della Gestione Utenti.',
     'clientsManage'           => 'Gestione Clienti',
-    'clientsManageDesc'       => 'Tabella della Gestione Clienti K-Group.',
+    'clientsManageDesc'       => 'Tabella della Gestione Clienti.',
     'importUsers'             => 'Importazione Utenti',
     'importUsersDesc'         => 'Strumento di importazione utenti da excel.',
 

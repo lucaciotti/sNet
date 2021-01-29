@@ -16,7 +16,7 @@
 
         @if($fatTot_KR)
             <div class="row">
-                <div class="contentTitle">Zone Turnover Situation - KRONA</div>
+                <div class="contentTitle">Zone Turnover Situation - GRUPPO A</div>
 
                 @include('_exports.pdf.schedaFat.tblZone', [
                         'fatZone' => $fatZone_KR,
@@ -31,7 +31,7 @@
     
     @if($fatTot_KO)
             <div class="row">
-                <div class="contentTitle">Zone Turnover Situation - KOBLENZ</div>
+                <div class="contentTitle">Zone Turnover Situation - GRUPO B</div>
 
                 @include('_exports.pdf.schedaFat.tblZone', [
                         'fatZone' => $fatZone_KO,
@@ -46,7 +46,7 @@
     
     @if($fatTot_KU)
             <div class="row">
-                <div class="contentTitle">Zone Turnover Situation - KUBICA</div>
+                <div class="contentTitle">Zone Turnover Situation - GRUPPO C</div>
 
                 @include('_exports.pdf.schedaFat.tblZone', [
                         'fatZone' => $fatZone_KU,

@@ -17,7 +17,7 @@ return [
 
     'orderDeliver'            => 'Commandes à Expedier',
     'ddtReceive'              => 'Expéditions en réception',
-    'newProd'                 => 'Nouveaux Produits K-Group',
+    'newProd'                 => 'Nouveaux Produits',
     'debtPay'                 => 'Echéances à Payer',
 
     'moreInfo'                => 'Plus d\'Infos',

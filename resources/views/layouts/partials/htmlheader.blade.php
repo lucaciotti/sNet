@@ -5,7 +5,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title> KNet 2.0 @yield('htmlheader_title', 'Title here') </title>
+    <title> KNet DEMO @yield('htmlheader_title', 'Title here') </title>
     {{-- <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> --}}
 
     

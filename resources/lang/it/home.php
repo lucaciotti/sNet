@@ -17,7 +17,7 @@ return [
 
     'orderDeliver'            => 'Ordini da Evadere',
     'ddtReceive'              => 'Spedizioni in Arrivo',
-    'newProd'                 => 'Nuovi Prodotti K-Group',
+    'newProd'                 => 'Nuovi Prodotti',
     'debtPay'                 => 'Scadenze da Saldare',
 
     'moreInfo'                => 'Più Info',

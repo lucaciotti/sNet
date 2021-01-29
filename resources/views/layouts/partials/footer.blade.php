@@ -7,7 +7,7 @@
     <!-- Default to the left -->
     <strong>
       Copyright &copy; {{ Carbon\Carbon::now()->year }}
-      <a href="http://www.k-group.com">K-Group</a>.
+      {{-- <a href="http://www.k-group.com">K-Group</a>. --}}
     </strong>
     {{ trans('_message.createdby') }}
     {{-- <a href="https://github.com/lucaciotti">Luca Ciotti</a>. --}}

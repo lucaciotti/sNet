@@ -12,12 +12,12 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <meta property="og:title" content="kNet 2.0 " />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="kNet 2.0 " />
-    <meta property="og:url" content="http://intranet.krona.it/" />
+    {{-- <meta property="og:url" content="http://intranet.krona.it/" /> --}}
     {{-- <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE.png" />
     <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x600.png" />
     <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x314.png" /> --}}
-    <meta property="og:sitename" content="intranet.krona.it/" />
-    <meta property="og:url" content="http://intranet.krona.it/" />
+    {{-- <meta property="og:sitename" content="intranet.krona.it/" /> --}}
+    {{-- <meta property="og:url" content="http://intranet.krona.it/" /> --}}
 
     {{-- <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@acachawiki" />
@@ -141,7 +141,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 <div id="c">
     <div class="container">
         <p>
-            <a href="http://intranet.krona.it"></a><b>kNet 2.0</b></a>.<br/>
+            {{-- <a href="http://intranet.krona.it"></a><b>kNet 2.0</b></a>.<br/> --}}
             <strong>Copyright &copy; {{ Carbon\Carbon::now()->year }}.</strong> {{ trans('_message.createdby') }} <a href="#">Luca Ciotti</a>.
         </p>
 

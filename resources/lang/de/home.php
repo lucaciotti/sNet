@@ -17,7 +17,7 @@ return [
 
     'orderDeliver'            => 'Bestellungen nachzukommen',
     'ddtReceive'              => 'Empfangsgut',
-    'newProd'                 => 'K-Group Neue Produkte',
+    'newProd'                 => 'Neue Produkte',
     'debtPay'                 => 'Zahlungsfristen nachzukommen',
 
     'moreInfo'                => 'Mehr Info',

@@ -137,7 +137,7 @@ Agents Portfolio
             </thead>
             <tbody>
               <tr>
-                <th>Krona</th>
+                <th>GRUPPO A</th>
                 <td> {{ currency($OCKrona) }} </td>
                 <td> {{ currency($BOKrona) }} </td>
                 <td> {{ currency($FTKrona) }} </td>
@@ -146,7 +146,7 @@ Agents Portfolio
                 <td> {{ currency($FTPrevKrona) }} </td>
               </tr>
               <tr>
-                <th>Koblenz</th>
+                <th>GRUPPO B</th>
                 <td> {{ currency($OCKoblenz) }} </td>
                 <td> {{ currency($BOKoblenz) }} </td>
                 <td> {{ currency($FTKoblenz) }} </td>
@@ -155,7 +155,7 @@ Agents Portfolio
                 <td> {{ currency($FTPrevKoblenz) }} </td>
               </tr>
               <tr>
-                <th>Kubica</th>
+                <th>GRUPPO C</th>
                 <td> {{ currency($OCKubica) }} </td>
                 <td> {{ currency($BOKubica) }} </td>
                 <td> {{ currency($FTKubica) }} </td>
@@ -164,7 +164,7 @@ Agents Portfolio
                 <td> {{ currency($FTPrevKubica) }} </td>
               </tr>
               <tr>
-                <th>Atomika</th>
+                <th>GRUPPO C2</th>
                 <td> {{ currency($OCAtomika) }} </td>
                 <td> {{ currency($BOAtomika) }} </td>
                 <td> {{ currency($FTAtomika) }} </td>

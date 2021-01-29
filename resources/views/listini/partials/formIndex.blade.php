@@ -21,13 +21,13 @@
         <input type="radio" name="optTipoDoc" id="opt1" value="" checked> {{ trans('doc.allDocs') }}
       </label>
       <label>
-        <input type="radio" name="optTipoDoc" id="opt2" value="KRONA"> Krona
+        <input type="radio" name="optTipoDoc" id="opt2" value="GRUPPO A"> GRUPPO A
       </label>
       <label>
-        <input type="radio" name="optTipoDoc" id="opt3" value="KOBLENZ"> Koblenz
+        <input type="radio" name="optTipoDoc" id="opt3" value="GRUPPO B"> GRUPPO B
       </label>
       <label>
-        <input type="radio" name="optTipoDoc" id="opt4" value="KUBICA"> Kubica
+        <input type="radio" name="optTipoDoc" id="opt4" value="GRUPPO C"> GRUPPO C
       </label>
       @if(RedisUser::get('ditta')=='knet_es')
         <label>

@@ -1,0 +1,96 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.6deb4
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Creato il: Gen 29, 2021 alle 21:47
+-- Versione del server: 10.1.37-MariaDB-0+deb9u1
+-- Versione PHP: 7.2.14-1+0~20190113100742.14+stretch~1.gbpd83c69
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `kNet_it`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Dump dei dati per la tabella `maggrp`
+--
+
+INSERT INTO `maggrp` (`codice`, `descrizion`, `livello`) VALUES
+('016', 'PORTE LEGNO', 1),
+('100', 'MATERIALE AZIENDALE', 1),
+('101', 'MATERIALE DI CONSUMO', 1),
+('102', 'COMPONENTISTICA METALLICA', 1),
+('103', 'COMPONENTISTICA LIGNEA', 1),
+('104', 'MATERIALE INFORMATIVO', 1),
+('105', 'STAMPI', 1),
+('106', 'ESTRUSI / STAMPAGGI', 1),
+('107', 'MINUTERIA', 1),
+('108', 'IMBALLAGGI', 1),
+('109', 'MATERIALI FERROSI', 1),
+('110', 'ASSEMBLATI', 1),
+('111', 'CARTONGESSO', 1),
+('112', 'CONFEZIONI', 1),
+('113', 'ASSEMBLAGGIO', 1),
+('114', 'CAMPIONATURE', 2),
+('200', 'CAMPIONI KRONA', 1),
+('201', 'CAMPIONI KOBLENZ', 1),
+('202', 'CAMPIONI COMMERCIALI', 1),
+('A01', 'CONTROTELAI X INTONACO', 1),
+('A02', 'CONTROTELAI  EURO INTONACO', 1),
+('A03', 'CONTROTELAI CARTONGESSO', 1),
+('A04', 'STARGATE', 1),
+('A05', 'EGO RASO MURO BATTENTE', 1),
+('A06', 'STIPITI', 1),
+('A07', 'EGO SCORR.INTONACO CARTONGESSO', 1),
+('A08', 'PORTE KAO', 1),
+('A09', 'KAO DIVIDERS', 1),
+('A10', 'CONTROTELAI FUTURGLASS', 1),
+('A11', 'TINTI LACCATI VETRI', 1),
+('A12', 'MANIGLIE', 1),
+('A13', 'KLIC', 1),
+('A14', 'BLINDATI', 1),
+('A15', 'BOTOLE', 1),
+('A16', 'MEKKANO', 1),
+('A99', 'DIFF. SCONTI - BONUS KRONA', 1),
+('B01', 'SISTEMI PER PORTE SCORREVOLI', 1),
+('B02', 'SISTEMI PER PORTE PIEGHEVOLI', 1),
+('B03', 'SISTEMI PER MOBILI', 1),
+('B04', 'SISTEMI PER VETRI', 1),
+('B05', 'GUIDE PER CASSETTI', 1),
+('B06', 'KUBICA', 1),
+('B07', 'PARTICOLARI SFUSI', 1),
+('B08', 'ACCESSORI', 1),
+('B09', 'SWING LIFE LEGNO', 1),
+('B10', 'SYSTEM ALUTOP', 1),
+('B99', 'DIFF. SCONTI - BONUS KOBLENZ', 1),
+('C01', 'GUIDE PER CASSETTI', 1),
+('C02', 'CERNIERE PER ANTE BATTENTI', 1),
+('C03', 'CASSETTI', 1),
+('C04', 'RIBALTABILI / GIREVOLI', 1),
+('C05', 'AUSILII DI LAVORAZIONE', 1),
+('DIC', 'DICITURE', 1);
+
+--
+-- Indici per le tabelle scaricate
+--
+
+--
+-- Indici per le tabelle `maggrp`
+--
+ALTER TABLE `maggrp`
+  ADD PRIMARY KEY (`codice`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

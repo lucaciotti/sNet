@@ -23,7 +23,7 @@ return [
     'usersManage'             => 'Gestión usuario',
     'usersManageDesc'         => 'Escritorio gestión usuario.',
     'clientsManage'           => 'Gestión clientes',
-    'clientsManageDesc'       => 'Escritorio gestión clientes K-Group.',
+    'clientsManageDesc'       => 'Escritorio gestión clientes.',
     'importUsers'             => 'Importar usuario',
     'importUsersDesc'         => 'Instrumento importar usuarios de excel',
 

@@ -17,7 +17,7 @@ return [
 
     'orderDeliver'            => 'Pedidos a enviar',
     'ddtReceive'              => 'Pedidos recibidos',
-    'newProd'                 => 'Nuevos productos K-Group',
+    'newProd'                 => 'Nuevos productos',
     'debtPay'                 => 'Facturas por pagar',
 
     'moreInfo'                => 'Más Info',

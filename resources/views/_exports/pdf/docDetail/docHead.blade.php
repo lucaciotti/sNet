@@ -31,7 +31,7 @@
 </span>
 
 <span class="floatright">
-    @if (in_array(RedisUser::get('location'), ['it']))
+    {{-- @if (in_array(RedisUser::get('location'), ['it']))
     <img src="{{ asset('/img/loghi/logo_ristretto.png') }}" alt="" height="120" align="right">
     @endif
     @if (in_array(RedisUser::get('location'), ['es']))
@@ -39,5 +39,5 @@
     @endif
     @if (in_array(RedisUser::get('location'), ['fr']))
     <img src="{{ asset('/img/loghi/logo_ristretto.png') }}" alt="" height="120" align="right">
-    @endif
+    @endif --}}
 </span>

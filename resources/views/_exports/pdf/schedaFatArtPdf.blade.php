@@ -15,7 +15,7 @@
         @if(!empty($fatList->where('tipoProd', 'GRUPPO A')->first()))
             <div class="row">
                 <div class="contentTitle">
-                    KRONA
+                    GRUPPO A
                     <span class="contentSubTitle">
                          - 
                         @if($pariperiodo && !$onlyMese) [Pari Periodo] {
@@ -41,7 +41,7 @@
         @if(!empty($fatList->where('tipoProd', 'GRUPPO B')->first()))
             <div class="row">
                 <div class="contentTitle">
-                    KOBLENZ
+                    GRUPPO B
                     <span class="contentSubTitle">
                         -
                         @if($pariperiodo && !$onlyMese) [Pari Periodo] {
@@ -67,7 +67,7 @@
         @if(!empty($fatList->where('tipoProd', 'GRUPPO C')->first()))        
             <div class="row">
                 <div class="contentTitle">
-                    KUBICA - HINGES
+                    GRUPPO C
                     <span class="contentSubTitle">
                         -
                         @if($pariperiodo && !$onlyMese) [Pari Periodo] {

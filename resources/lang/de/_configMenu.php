@@ -21,9 +21,9 @@ return [
 
     'extraSettings'           => 'Erweiterte Einstellungen',
     'usersManage'             => 'Benutzerverwaltung',
-    'usersManageDesc'         => 'Tabelle der K-Group Benutzerverwaltung',
+    'usersManageDesc'         => 'Tabelle Benutzerverwaltung',
     'clientsManage'           => 'Kundenverwaltung',
-    'clientsManageDesc'       => 'Tabelle der K-Group Kundenverwaltung',
+    'clientsManageDesc'       => 'Tabelle Kundenverwaltung',
     'importUsers'             => 'Kunden Import',
     'importUsersDesc'         => 'Kunden Importwerkzeug von excel',
 

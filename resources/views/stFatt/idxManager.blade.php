@@ -108,36 +108,36 @@
 
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#Krona" data-toggle="tab" aria-expanded="true">Krona</a></li>
-              <li class=""><a href="#Koblenz" data-toggle="tab" aria-expanded="false">Koblenz</a></li>
-              <li class=""><a href="#Kubica" data-toggle="tab" aria-expanded="false">Kubica</a></li>
-              <li class=""><a href="#Grass" data-toggle="tab" aria-expanded="false">Grass</a></li>
+              <li class="active"><a href="#Krona" data-toggle="tab" aria-expanded="true">GRUPPO A</a></li>
+              <li class=""><a href="#Koblenz" data-toggle="tab" aria-expanded="false">GRUPPO B</a></li>
+              <li class=""><a href="#Kubica" data-toggle="tab" aria-expanded="false">GRUPPO C</a></li>
+              {{-- <li class=""><a href="#Grass" data-toggle="tab" aria-expanded="false">Grass</a></li> --}}
               <li class=""><a href="#Altro" data-toggle="tab" aria-expanded="false">{{ trans('stFatt.otherGroup') }}</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="Krona">
                 @include('stFatt.partials.tblDetAg', [
-                  'fatturato' => $fatDet->where('prodotto', 'KRONA'),
+                  'fatturato' => $fatDet->where('prodotto', 'GRUPPO A'),
                 ])
               </div>
 
               <div class="tab-pane" id="Koblenz">
                 @include('stFatt.partials.tblDetAg', [
-                  'fatturato' => $fatDet->where('prodotto', 'KOBLENZ'),
+                  'fatturato' => $fatDet->where('prodotto', 'GRUPPO B'),
                 ])
               </div>
 
               <div class="tab-pane" id="Kubica">
                 @include('stFatt.partials.tblDetAg', [
-                  'fatturato' => $fatDet->where('prodotto', 'KUBIKA'),
+                  'fatturato' => $fatDet->where('prodotto', 'GRUPPO C'),
                 ])
               </div>
 
-              <div class="tab-pane" id="Grass">
+              {{-- <div class="tab-pane" id="Grass">
                 @include('stFatt.partials.tblDetAg', [
                   'fatturato' => $fatDet->where('prodotto', 'GRASS'),
                 ])
-              </div>
+              </div> --}}
 
               <div class="tab-pane" id="Altro">
                 @include('stFatt.partials.tblDetAg', [

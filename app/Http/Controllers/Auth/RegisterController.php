@@ -93,9 +93,9 @@ class RegisterController extends Controller
         $user->isActive = true;
         $user->save();
         
-        Mail::to('ced-it@k-group.com')
-            ->cc('ced@k-group.com')
-            ->send(new NewRegistration($user));
+        // Mail::to('ced-it@k-group.com')
+        //     ->cc('ced@k-group.com')
+        //     ->send(new NewRegistration($user));
 
         return $user;
 

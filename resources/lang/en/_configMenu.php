@@ -21,9 +21,9 @@ return [
 
     'extraSettings'           => 'Advanced Settings',
     'usersManage'             => 'Users\' Management',
-    'usersManageDesc'         => 'Chart of K-Group Users\' Management.',
+    'usersManageDesc'         => 'Chart of Users\' Management.',
     'clientsManage'           => 'Customers\' Management',
-    'clientsManageDesc'       => 'Chart of K-Group Customers\' Management.',
+    'clientsManageDesc'       => 'Chart of Customers\' Management.',
     'importUsers'             => 'Users\' Importation',
     'importUsersDesc'         => 'Tool for users\' importation from excel.',
 
