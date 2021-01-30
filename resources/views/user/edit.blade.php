@@ -89,9 +89,9 @@
               <label>{{ trans('user.refDitta') }}</label>
               @if (RedisUser::get('role')=='admin')
                 <select name="ditta" class="form-control" style="width: 100%;">
-                  <option value="it" @if ($user->ditta=='it') selected="selected" @endif>kNet Italia</option>
-                  <option value="es" @if ($user->ditta=='es') selected="selected" @endif>kNet Spagna</option>
-                  <option value="fr" @if ($user->ditta=='fr') selected="selected" @endif>kNet Francia</option>
+                  <option value="it" @if ($user->ditta=='it') selected="selected" @endif>kNet DEMO</option>
+                  {{-- <option value="es" @if ($user->ditta=='es') selected="selected" @endif>kNet Spagna</option>
+                  <option value="fr" @if ($user->ditta=='fr') selected="selected" @endif>kNet Francia</option> --}}
                 </select>
               @else
                 <input type="text" class="form-control" name="ditta" value="kNet_{{$user->ditta}}" readonly="readonly">
