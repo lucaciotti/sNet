@@ -11,7 +11,9 @@ return [
     |
     */
 
-    'knetMission'            => 'Our goal is to guarantee a better digitized service to our Customers and to our Agents, by offering a superior web surfing experience.',
+    'knetMission'            => 'kNet is a simple Customer Relationship Management that wants
+                                     offer a better exchange of information between the Company
+                                     , the Customers and sales Agents',
 
 
     'services'               => 'Offered Services',

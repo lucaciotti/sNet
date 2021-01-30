@@ -11,8 +11,9 @@ return [
     |
     */
 
-    'knetMission'            => 'Il nostro obbiettivo è quello di garantire un miglior servizio informatizzato
-                                        ai nostri Clienti ed ai nostri Agenti, offrendo una migliore esperienza di navigazione web.',
+    'knetMission'            => 'kNet è un Customer Relationship Management semplice che vuole 
+                                    offrire un migliore scambio di informazioni tra l\'Azienda
+                                     i clienti e gli agenti di commercio.',
 
 
     'services'               => 'Servizi Offerti',

@@ -6,12 +6,12 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="kNet 2.0 ">
+    <meta name="description" content="kNet DEMO ">
     <meta name="author" content="Luca Ciotti">
 
-    <meta property="og:title" content="kNet 2.0 " />
+    <meta property="og:title" content="kNet DEMO " />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="kNet 2.0 " />
+    <meta property="og:description" content="kNet DEMO " />
     {{-- <meta property="og:url" content="http://intranet.krona.it/" /> --}}
     {{-- <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE.png" />
     <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x600.png" />
@@ -23,7 +23,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <meta name="twitter:site" content="@acachawiki" />
     <meta name="twitter:creator" content="@acacha1" /> --}}
 
-    <title>kNet 2.0</title>
+    <title>kNet DEMO</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('/css/app-landing.css') }}" rel="stylesheet">
@@ -50,14 +50,14 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><b>kNet 2.0</b></a>
+            <a class="navbar-brand" href="#"><b>kNet DEMO</b></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#home" class="smoothScroll">{{ trans('_message.home') }}</a></li>
                 {{-- <li><a href="#desc" class="smoothScroll">{{ trans('adminlte_lang::message.description') }}</a></li>
                 <li><a href="#showcase" class="smoothScroll">{{ trans('adminlte_lang::message.showcase') }}</a></li> --}}
-                <li><a href="#contact" class="smoothScroll">{{ trans('_message.contact') }}</a></li>
+                {{-- <li><a href="#contact" class="smoothScroll">{{ trans('_message.contact') }}</a></li> --}}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
@@ -77,7 +77,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <div class="container">
         <div class="row centered">
             <div class="col-lg-12">
-                <h1>kNet <b><a href="{{ url('/login') }}">2.0</a></b></h1>
+                <h1>kNet <b><a href="{{ url('/login') }}">DEMO</a></b></h1>
                 <h3>{{ trans('landing.knetMission') }}</h3>
             </div>
         </div>
@@ -109,15 +109,6 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
         </div>
         <br>
         <hr>
-    </div>
-    <div class="container">
-        <div class="row centered">
-            <div class="col-lg-12">
-                <h1><b><a href="{{ url('/login') }}">Enter</a></b></h1>
-                <br>
-                
-            </div>
-        </div>
     </div> <!--/ .container -->
 </div><!--/ #introwrap -->
 </section>
@@ -125,6 +116,15 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 <section id="contact" name="contact">
 <div id="footerwrap">
     <div class="container">
+        <div class="container">
+            <div class="row centered">
+                <div class="col-lg-12">
+                    <h1><b><a href="{{ url('/login') }}">Enter</a></b></h1>
+                    <br>
+        
+                </div>
+            </div>
+        </div>
         {{-- <div class="col-lg-5">
             <h3>Krona Koblenz S.P.A.</h3>
             <p>
