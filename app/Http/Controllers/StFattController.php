@@ -462,7 +462,7 @@ class StFattController extends Controller
                 ->where('codice', 'NOT LIKE', '2%')
                 ->orderBy('codice')
                 ->get();
-
+      // dd($fatZone->first());
       return view('stFatt.idxZone', [
         'agents' => $agents,
         'agente' => $agente,

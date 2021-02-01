@@ -24,7 +24,7 @@
     @endphp
     @foreach($fatZone as $fatZona)
         @php
-            $descZona = ($fatZona->first()->client) ? $fatZona->first()->client->detZona->descrizion : "NO ZONA";
+            $descZona = ($fatZona->first()->client) ? ($fatZona->first()->client->detZona ? $fatZona->first()->client->detZona->descrizion : "NO ZONA") : "NO ZONA";
             $i++;
         @endphp
         <tbody>
